@@ -202,6 +202,7 @@ func CreateContainerNode(p CreateParams) error {
 	if p.OCIBinary == Podman { // enable execing in /var
 		// podman mounts var/lib with no-exec by default  https://github.com/containers/libpod/issues/5103
 		runArgs = append(runArgs, "--volume", fmt.Sprintf("%s:/var:exec", p.Name))
+		runArgs = append(runArgs, "--volume", "/var/lib/containers:/host-containers")
 
 		if memcgSwap {
 			runArgs = append(runArgs, fmt.Sprintf("--memory-swap=%s", p.Memory))
